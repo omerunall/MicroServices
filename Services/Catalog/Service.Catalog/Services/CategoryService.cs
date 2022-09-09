@@ -33,7 +33,7 @@ namespace Service.Catalog.Services
             await _categoryCollection.InsertOneAsync(category);
 
             return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200);
-
+             
         }
 
 
