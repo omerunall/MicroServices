@@ -39,6 +39,7 @@ namespace Service.Catalog.Services
         public async Task<Response<CategoryDto>> GetByIdAsyns(string id)//const correctness parameter must be const if does not change 
         {
             var category = await _categoryCollection.Find<Category>(x => x.Id == id).FirstOrDefaultAsync();
+
             if (category == null)
             {
                 return Response<CategoryDto>.Fail("Category not found", 404); //404 --> magic number
