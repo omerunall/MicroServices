@@ -3,7 +3,7 @@ using System;
 
 namespace Service.Catalog.Model
 {
-    public class Course
+    public class Courses
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

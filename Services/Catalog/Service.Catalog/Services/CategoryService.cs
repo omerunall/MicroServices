@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace Service.Catalog.Services
 {
-    internal class CategoryService
+    internal class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
+        const int SUCCESS_CODE = 200;
 
         public CategoryService(IMapper mapper, IDatabaseSettings databaseSettings)
         {
@@ -25,15 +26,24 @@ namespace Service.Catalog.Services
         public async Task<Response<List<CategoryDto>>> GetAllAsync()
         {
             var categories = await _categoryCollection.Find(c => true).ToListAsync();
-            return Response<List<CategoryDto>>.Success(_mapper.Map<List<CategoryDto>>(categories), 200);
+            return Response<List<CategoryDto>>.Success(_mapper.Map<List<CategoryDto>>(categories), SUCCESS_CODE);
         }
 
-        public async Task<Response<CategoryDto>> CreateAsync(Category category) 
+        public async Task<Response<CategoryDto>> CreateAsync(Category category) //const correctness parameter must be const if does not change 
         {
             await _categoryCollection.InsertOneAsync(category);
 
-            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200);
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200); // 200--> magic number
 
+        }
+        public async Task<Response<CategoryDto>> GetByIdAsyns(string id)//const correctness parameter must be const if does not change 
+        {
+            var category = await _categoryCollection.Find<Category>(x => x.Id == id).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                return Response<CategoryDto>.Fail("Category not found", 404); //404 --> magic number
+            }
+            return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category), 200); //200 --> magic number
         }
 
 

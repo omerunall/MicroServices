@@ -4,7 +4,7 @@ using System;
 
 namespace Service.Catalog.DTOs
 {
-    internal class CourseDto
+   public class CourseDto
     {
  
         public string Id { get; set; }
@@ -19,7 +19,6 @@ namespace Service.Catalog.DTOs
 
         public string Picture { get; set; }
 
-      
         public DateTime CreatedTime { get; set; }
 
         public FeatureDto Feature { get; set; }

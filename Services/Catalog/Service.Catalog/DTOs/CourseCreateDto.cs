@@ -2,7 +2,7 @@
 
 namespace Service.Catalog.DTOs
 {
-    internal class CourseCreateDto
+    public class CourseCreateDto
     {
         public string Name { get; set; }
 
